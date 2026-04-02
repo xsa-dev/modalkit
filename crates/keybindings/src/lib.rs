@@ -380,6 +380,11 @@ where
     /// Returns a user-friendly string to display for the current mode.
     fn show_mode(&self) -> Option<String>;
 
+    /// Returns the current input mode.
+    fn current_mode<M>(&self) -> Option<M>
+    where
+        M: Copy + Clone + Debug + Default + Hash + Eq + PartialEq;
+
     /// Resets the current mode to the default.
     fn reset_mode(&mut self);
 
@@ -1376,6 +1381,19 @@ where
 
     fn show_mode(&self) -> Option<String> {
         self.state.show(&self.ctx)
+    }
+
+    fn current_mode<M>(&self) -> Option<M>
+    where
+        M: Copy + Clone + Debug + Default + Hash + Eq + PartialEq,
+    {
+        use std::any::Any;
+        // Try to downcast the current mode type to the requested type M
+        if let Ok(mode) = Any::downcast_ref::<M>(&self.state) {
+            Some(*mode)
+        } else {
+            None
+        }
     }
 
     fn get_cursor_indicator(&self) -> Option<char> {
