@@ -34,6 +34,9 @@ use super::{CharacterContext, CommonKeyClass};
 pub mod command;
 pub mod keybindings;
 
+pub use self::keybindings::default_vim_keys;
+pub use self::keybindings::VimMachine;
+
 /// Vim's input modes
 #[derive(Clone, Copy, Debug, Default, Eq, Hash, PartialEq)]
 pub enum VimMode {
