@@ -197,6 +197,13 @@ where
         self.bindings.show_mode()
     }
 
+    fn current_mode<M>(&self) -> Option<M>
+    where
+        M: Copy + Clone + Debug + Default + Hash + Eq + PartialEq,
+    {
+        self.bindings.current_mode()
+    }
+
     fn reset_mode(&mut self) {
         self.bindings.reset_mode()
     }
